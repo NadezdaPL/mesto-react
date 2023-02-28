@@ -49,5 +49,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NadezdaPL/mesto-react/issues"
+  },
+  "devDependencies": {
+    "prettier": "2.8.4"
   }
 }
