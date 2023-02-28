@@ -8,19 +8,6 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [userAvatar, setUserAvatar] = useState("");
   const [cards, setCards] = useState([]);
 
-  // useEffect(() => {
-  //   Promise.all([api.getInfo(), api.getInitialCards()])
-  //     .then((data) => {
-  //       setUserName(data[0].name);
-  //       setUserDescription(data[0].about);
-  //       setUserAvatar(data[0].avatar);
-  //       setCards(data[1]);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);      
-  //     });
-  // }, []);
-
   useEffect(() => {
     Promise.all([api.getInfo(), api.getInitialCards()])
       .then(([userData, cardsData]) => {

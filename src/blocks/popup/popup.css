@@ -12,7 +12,8 @@
   padding-top: 195px;
   visibility: hidden;
   opacity: 0;
-  transition: 0.5s ease-in-out;
+  transition: 0.5s linear;
+
 }
 
 @media screen and (max-width: 568px) {
