@@ -1,32 +1,24 @@
-import React, { useEffect, useState } from "react";
-import api from "../utils/api.js";
+import { useContext } from "react";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    Promise.all([api.getInfo(), api.getInitialCards()])
-      .then(([userData, cardsData]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-        setCards(cardsData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  cards,
+  onCardClick,
+  onCardDelete,
+  onCardLike,
+}) {
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="content page__content">
       <section className="profile content__profile">
         <div className="profile__edit-avatar">
           <img
-            src={`${userAvatar}`}
+            src={`${currentUser.avatar}`}
             className="profile__avatar"
             alt="Фото Аватара"
           />
@@ -38,14 +30,14 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         </div>
         <div className="profile__info">
           <div className="profile__container">
-            <h1 className="profile__title">{userName}</h1>
+            <h1 className="profile__title">{currentUser.name}</h1>
             <button
               type="button"
               className="profile__edit-button"
               onClick={onEditProfile}
             ></button>
           </div>
-          <p className="profile__text">{userDescription}</p>
+          <p className="profile__text">{currentUser.about}</p>
         </div>
         <button
           type="button"
@@ -62,6 +54,8 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
               link={card.link}
               name={card.name}
               onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           );
         })}

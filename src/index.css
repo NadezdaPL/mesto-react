@@ -63,3 +63,6 @@
 @import url(./blocks/popup/__error/popup__error.css);
 @import url(./blocks/popup/__error/_visible/popup__error_visible.css);
 @import url(./blocks/popup/__figure/popup__figure.css);
+
+@import url(./blocks/spinner/spinner.css);
+@import url(./blocks/spinner/_active/spinner_active.css);

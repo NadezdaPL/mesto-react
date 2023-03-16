@@ -10,6 +10,6 @@ function ImagePopup({ card, onClose }) {
       </div>
     </section>
   );
-};
+}
 
 export default ImagePopup;

@@ -33,8 +33,8 @@ class Api {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
-        name: data.name,
-        about: data.job,
+        name: `${data.name}`,
+        about: `${data.about}`,
       }),
     });
   }
@@ -50,18 +50,18 @@ class Api {
     });
   }
   
-  addLike(id) {
-    return this._request(`${this._baseUrl}/cards/${id}/likes`, {
-      headers: this._headers,
-        method: "PUT",
-    });
-  }
-  
-  removeLike(id) {
-    return this._request(`${this._baseUrl}/cards/${id}/likes`, {
-      headers: this._headers,
-      method: "DELETE",
-    });
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return this._request(`${this._baseUrl}/cards/${id}/likes`, {
+        headers: this._headers,
+          method: "PUT",
+      });
+    } else {
+      return this._request(`${this._baseUrl}/cards/${id}/likes`, {
+        headers: this._headers,
+        method: "DELETE",
+      });
+    }
   }
   
   deleteCard(id) {
