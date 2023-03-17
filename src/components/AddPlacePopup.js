@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
+import useForm from "../hooks/useForm";
+
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, onChanging }) {
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
 
-  function handleChangeTitle(e) {
-    setTitle(e.target.value);
-  }
-
-  function handleChangeLink(e) {
-    setLink(e.target.value);
-  }
+ const { values, handleChange, reset } = useForm();
 
   function handleSubmit(e) {
     e.preventDefault();
-
+    
     onAddPlace({
-      title,
-      link,
+      title: values.title,
+      link: values.link
     });
   }
 
   useEffect(() => {
-    setTitle("");
-    setLink("");
-  }, []);
+    reset()
+  }, [isOpen, reset]);
 
   return (
     <PopupWithForm
@@ -39,7 +32,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onChanging }) {
       <fieldset className="popup__fieldset">
         <input
           className="popup__input popup__input_type_nickname"
-          onChange={handleChangeTitle}
+          onChange={handleChange}
           name="title"
           type="text"
           placeholder="Название"
@@ -47,6 +40,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onChanging }) {
           minLength="2"
           maxLength="30"
           id="nickname"
+          value={values.title || ''}
         />
         <span
           id="nickname-error"
@@ -56,12 +50,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onChanging }) {
       <fieldset className="popup__fieldset">
         <input
           className="popup__input popup__input_type_link"
-          onChange={handleChangeLink}
+          onChange={handleChange}
           name="link"
           type="url"
           placeholder="Ссылка на картинку"
           required
           id="link"
+          value={values.link || ''}
         />
         <span
           id="link-error"

@@ -1,33 +1,25 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import useForm from "../hooks/useForm";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, onChanging }) {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
 
-  useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
-
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-
-  function handleChangeDescription(e) {
-    setDescription(e.target.value);
-  }
+  const { values, handleChange, reset } = useForm();
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onUpdateUser({
-      name,
-      about: description,
+      name: values.name,
+      about: values.about
     });
   }
+
+  useEffect(() => {
+    reset()
+  }, [currentUser, isOpen, reset]);
 
   return (
     <PopupWithForm
@@ -48,7 +40,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onChanging }) {
           required
           id="name"
           placeholder="Имя"
-          onChange={handleChangeName}
+          onChange={handleChange}
+          value={values.name || ''}
         />
         <span
           id="name-error"
@@ -65,7 +58,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onChanging }) {
           required
           id="about"
           placeholder="Вид деятельности"
-          onChange={handleChangeDescription}
+          onChange={handleChange}
+          value={values.about || ''}
         />
         <span
           id="job-error"

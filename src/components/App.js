@@ -37,15 +37,15 @@ function App() {
   }, []);
 
   const handleEditProfileClick = () => {
-    setIsEditProfilePopupOpen("popup_opened");
+    setIsEditProfilePopupOpen(true);
   };
 
   const handleAddPlaceClick = () => {
-    setIsAddPlacePopupOpen("popup_opened");
+    setIsAddPlacePopupOpen(true);
   };
 
   const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen("popup_opened");
+    setIsEditAvatarPopupOpen(true);
   };
 
   const handleCardClick = (card) => {
@@ -53,9 +53,13 @@ function App() {
   };
 
   const handleCardDelete = (card) => {
-    api.deleteCard(card._id).then(() => {
+    api.deleteCard(card._id)
+    .then(() => {
       setCards((state) => state.filter((i) => i._id !== card._id));
-    });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   };
 
   const handleUpdateUser = (data) => {
@@ -115,9 +119,13 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    api.changeLikeCardStatus(card._id, !isLiked)
+    .then((newCard) => {
       setCards((state) => state.map((i) => (i._id === card._id ? newCard : i)));
-    });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   const closeAllPopups = () => {
