@@ -18,7 +18,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onChanging }) {
   }
 
   useEffect(() => {
-    reset()
+    currentUser ? reset(currentUser) : reset()
   }, [currentUser, isOpen, reset]);
 
   return (
